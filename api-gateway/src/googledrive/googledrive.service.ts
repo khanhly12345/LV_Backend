@@ -1,5 +1,6 @@
 // google-drive.service.ts
 import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 const { google } = require('googleapis');
 import { Readable } from 'stream';
 
@@ -7,16 +8,18 @@ import { Readable } from 'stream';
 export class GoogleDriveService {
   private readonly drive;
 
-  constructor() {
+  constructor(
+	private config: ConfigService
+  ) {
     const oauth2Client = new google.auth.OAuth2(
-      '227672290325-ej8hppa706o7vgeh4jqok5t26mobn8rd.apps.googleusercontent.com',
-      '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',
-      'https://developers.google.com/oauthplayground',
+		this.config.get('GOOGLE_DRIVE_CLIENT_ID'),
+		this.config.get('GOOGLE_DRIVE_CLIENT_SECRET'),
+		this.config.get('GOOGLE_DRIVE_REDIRECT_URI')
     );
 
     // Set the refresh token obtained during the OAuth2 authorization process
     oauth2Client.setCredentials({
-      refresh_token: '1//04J3t4Q5iwfc_CgYIARAAGAQSNwF-L9IrDD3a2r2KbuS_HVgUEx0J2jsWZrZG2sGdyEzR3G-nQ_GKGzigxuXS9SpME9dsB8hm4hg',
+      refresh_token: this.config.get('GOOGLE_DRIVE_REFRESH_TOKEN'),
     });
 
     this.drive = google.drive({ version: 'v3', auth: oauth2Client });
@@ -46,5 +49,12 @@ export class GoogleDriveService {
       console.error('Error uploading image to Google Drive:', error);
       throw new Error('Failed to upload image');
     }
+  }
+
+  async deleteImage() {
+	// const response = await this.drive.files.delete({
+	// 	fileId: '1blT_xOLtKNE3y8ppJvtUTr8gsw2-loTR'
+	// })
+	console.log(this.config.get('GOOGLE_DRIVE_CLIENT_ID'))
   }
 }

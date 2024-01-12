@@ -12,7 +12,7 @@ export class Order  {
   @Prop()
   total: number;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })	
   user: User;
 }
 

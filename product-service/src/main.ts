@@ -9,7 +9,7 @@ async function bootstrap() {
 	transport: Transport.RMQ,
 	options: {
 		urls: ['amqps://vyvgssoj:AxwZOYn4LHstns-N-AuFtx92d5Topdrh@rattlesnake.rmq.cloudamqp.com/vyvgssoj'],
-		queue: "products_queue",
+		queue: "product_queue",
 		queueOptions: {
 			durable: false
 		}
@@ -19,6 +19,6 @@ async function bootstrap() {
 
   app.use('/uploads', express.static('uploads'));
   await app.startAllMicroservices()
-  await app.listen(3001);
+  await app.listen(3002);
 }
 bootstrap();

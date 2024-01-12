@@ -3,9 +3,10 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ProductModule } from './product/product.module';
 import { GoogledriveModule } from './googledrive/googledrive.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [ProductModule, GoogledriveModule],
+  imports: [ConfigModule.forRoot({isGlobal: true}), ProductModule, GoogledriveModule],
   controllers: [AppController],
   providers: [AppService],
 })
