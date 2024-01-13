@@ -1,6 +1,9 @@
 import {
   Body,
   Controller,
+  Delete,
+  Get,
+  Param,
   Post,
   UploadedFiles,
   UseInterceptors,
@@ -43,13 +46,38 @@ export class ProductController {
     return this.productService.createProduct(data);
   }
 
+  @Get()
+  getAllProduct() {
+	return this.productService.getAllProduct()
+  }
+
+  @Get('edit/:id')
+  getProductById(@Param('id') id: string) {
+	return this.productService.getProductById(id)
+  }
+
+  @Post('edit/:id')
+  editProduct(@Param('id') id: string, @Body() data) {
+	console.log(id, data)
+	return this.productService.editProduct(id, data)
+  }
+
   @Post('delete')
   deleteImage() {
 	return this.ggDriveService.deleteImage()
   }
 
+  @Delete('delete/:id')
+  deleteProduct(@Param('id') id: string) {
+	return this.productService.deleteProduct(id)
+  }
+
+	// option product
+
   @Post('options/create')
   createOptions(@Body() data) {
-
+	console.log(data)
+	return this.productService.createProductOptions(data)
   }
+
 }

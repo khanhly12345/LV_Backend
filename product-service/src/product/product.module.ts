@@ -4,6 +4,7 @@ import { ProductService } from './product.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Product, ProductSchema } from 'src/schema/product.schema';
 import { ProductOption, ProductOptionSchema } from 'src/schema/productOption.schema';
+import { GoogleDriveService } from 'src/googledrive/googledrive.service';
 
 @Module({
 	imports: [
@@ -13,6 +14,6 @@ import { ProductOption, ProductOptionSchema } from 'src/schema/productOption.sch
 		]),
 	  ],
   controllers: [ProductController],
-  providers: [ProductService]
+  providers: [ProductService, GoogleDriveService]
 })
 export class ProductModule {}

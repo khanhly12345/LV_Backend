@@ -16,7 +16,7 @@ export class ProductOption {
 	ram: string
 
 	@Prop()
-	qanntity: number
+	quantity: number
 
 }
 
