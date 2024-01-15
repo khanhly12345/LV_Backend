@@ -39,11 +39,11 @@ export class ProductService {
 	}
 
 	async deleteProduct(payload) {
-		// const product = await this.productService.findById(payload.id)
+		const product = await this.productService.findById(payload.id)
 
-		// for(let i=0; i<product.image.length; i++) {
-		// 	await this.ggDriveService.deleteImage(product.image[0])
-		// }
+		for(let i=0; i<product.image.length; i++) {
+			await this.ggDriveService.deleteImage(product.image[i])
+		}
 
 		const deleted = await this.productService.deleteOne({ _id: payload.id})
 		if(deleted.deletedCount > 0) {
