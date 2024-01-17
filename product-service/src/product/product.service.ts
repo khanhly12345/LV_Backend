@@ -58,4 +58,15 @@ export class ProductService {
 		const productOption = await this.productOptionService.create(payload.data)
 		return productOption;
 	}
+
+	async getProductOptionsById(payload: any) {
+		const productOption = await this.productOptionService.find({ productId: payload.id})
+		return productOption;
+	}
+
+	// cart
+	async getCart(payload: any) {
+		const cart = await this.productOptionService.find({ _id: { $in: payload.cart }}).populate('productId')
+		return cart;
+	}
 }

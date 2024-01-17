@@ -30,4 +30,13 @@ export class ProductService {
 	createProductOptions(data: any) {
 		return this.client.send('create_productOptions', {data})
 	}
+
+	getProductOptionsById(id: any) {
+		return this.client.send('getById_productOptions', {id})
+	}
+	// cart
+
+	getCart(cart: any) {
+		return this.client.send('getCart', { cart })
+	}
 }

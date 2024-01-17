@@ -80,4 +80,15 @@ export class ProductController {
 	return this.productService.createProductOptions(data)
   }
 
+  @Get('options/getById/:id')
+  getProductOptionsById(@Param('id') id: string) {
+	console.log(id)
+	return this.productService.getProductOptionsById(id)
+  }
+
+	//   cart
+	@Post('cart')
+	getCart(@Body() cart: any) {
+		return this.productService.getCart(cart)
+	}
 }

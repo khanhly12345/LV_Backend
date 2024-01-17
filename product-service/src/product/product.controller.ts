@@ -36,4 +36,16 @@ export class ProductController {
 	createProductOptions(@Payload() data: any) {
 		return this.productService.createProductOptions(data)
 	}
+
+	@MessagePattern('getById_productOptions')
+	getProductOptionsById(@Payload() data: any) {
+		console.log(data)
+		return this.productService.getProductOptionsById(data)
+	}
+
+	// cart
+	@MessagePattern('getCart')
+	getCart(@Payload() data: any) {
+		return this.productService.getCart(data)
+	}
 }
