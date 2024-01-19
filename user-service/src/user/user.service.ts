@@ -9,13 +9,13 @@ export class UserService {
     @InjectModel(User.name) private readonly usersModel: mongoose.Model<User>,
   ) {}
 
-  async findAll(): Promise<User[]> {
-    const users = await this.usersModel.find().exec();
-    return users;
-  }
+//   async findAll(): Promise<User[]> {
+//     const users = await this.usersModel.find().exec();
+//     return users;
+//   }
 
-  async createUser(data: User) {
-	const user = await this.usersModel.create(data)
-	return user;
-  }
+//   async createUser(data: User) {
+// 	const user = await this.usersModel.create(data)
+// 	return user;
+//   }
 }
