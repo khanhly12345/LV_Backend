@@ -2,6 +2,9 @@ import { Module } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserController } from './user.controller';
 import { ClientsModule, Transport } from '@nestjs/microservices';
+import { JwtModule } from '@nestjs/jwt';
+import { PassportModule } from '@nestjs/passport';
+import { JwtStrategy } from 'src/Guard/jwt-guard.service';
 
 @Module({
 	imports: [
@@ -17,9 +20,13 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
 					},
 				},
 			}
-		])
+		]),
+		PassportModule.register({ defaultStrategy: 'jwt' }),
+		JwtModule.register({
+
+		})
 	],
-  providers: [UserService],
+  providers: [UserService, JwtStrategy],
   controllers: [UserController]
 })
 export class UserModule {}

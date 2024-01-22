@@ -7,4 +7,8 @@ export class UserService {
 	async signUp(data: any) {
 		return this.client.send('signup', { data })
 	}
+
+	async getUserProfile(data: string) {
+		return this.client.send('get_profile', { data })
+	}
 }

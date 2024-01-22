@@ -16,6 +16,9 @@ export class User {
   role: string
 
   @Prop({ default: null})
+  urlId: string
+
+  @Prop({ default: null})
   fullname: string
 
   @Prop({ default: null})

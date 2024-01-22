@@ -15,4 +15,9 @@ export class AuthController {
 	logIn(@Body() data: any) {
 		return this.authService.logIn(data)
 	}
+
+	@MessagePattern('refresh_token')
+	refresh_token(@Body() data: any) {
+		return this.authService.refreshToken(data)
+	}
 }

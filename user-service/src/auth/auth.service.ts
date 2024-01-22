@@ -1,4 +1,4 @@
-import { ForbiddenException, HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { ForbiddenException, HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User, UserDocument } from 'src/user/schema/user.schema';
@@ -6,12 +6,13 @@ import * as bcrypt from 'bcrypt';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from "@nestjs/jwt";
 
+
 @Injectable()
 export class AuthService {
 	constructor(
 		@InjectModel(User.name) private userService: Model<UserDocument>,
 		private config: ConfigService,
-		private jwt: JwtService
+		private jwt: JwtService,
 	){}
 
 	async signUp(payload: any) {
@@ -36,38 +37,74 @@ export class AuthService {
 	async logIn(payload: any) {
 		try {
 			const email: any = await this.userService.findOne({ email: payload.data.email })
-			console.log(email)
-			const comparePassword= await bcrypt.compare(payload.data.password, email.password);
-			console.log(comparePassword)
+
 			if(!email) {
-				throw new ForbiddenException('Credentails Incorrect!')
+				return  new HttpException('Email Not Found!', HttpStatus.UNAUTHORIZED);
 			}
+
+			const comparePassword= await bcrypt.compare(payload.data.password, email.password);
+
 			if(!comparePassword) {
-				throw new ForbiddenException('Credentails Incorrect!')
+				return new HttpException('Incorrect Password!', HttpStatus.UNAUTHORIZED)
 			}
+
 			return await this.signToken(email._id, email)
 		} catch (error) {
 			throw new HttpException('Credential', HttpStatus.INTERNAL_SERVER_ERROR)
 		}
 	}
 
-	async signToken(useId: number, email: string): Promise<{access_token: string}> {
+	async signToken(useId: number, email: string): Promise<{access_token: string, refresh_token: string}> {
 		const payload = {
 			sub: useId,
 			email
 		}
 
-		console.log( this.config.get('JWT_SECRET'))
-
 		const secret = this.config.get('JWT_SECRET')
 
 		const token = await this.jwt.signAsync(payload, {
-			expiresIn: '15m',
+			expiresIn: '3d',
+			secret: secret
+		})
+
+		const refreshToken = await this.jwt.signAsync(payload, {
+			expiresIn: '7d',
 			secret: secret
 		})
 
 		return {
-			access_token: token
+			access_token: token,
+			refresh_token: refreshToken
+		}
+	}
+
+	async signAccessToken(useId: number, email: string): Promise<{access_token: string}> {
+		const payload = {
+			sub: useId,
+			email
+		}
+
+		const secret = this.config.get('JWT_SECRET')
+
+		const token = await this.jwt.signAsync(payload, {
+			expiresIn: '3d',
+			secret: secret
+		})
+
+		return {
+			access_token: token,
+		}
+	}
+
+	async refreshToken(payload: any) {
+		try {
+			// console.log(payload)
+			const decoded = await this.jwt.verify(payload.data.refresh_token, { secret: this.config.get('JWT_SECRET') })
+
+			const email: any = await this.userService.findOne({ _id: decoded.email._id })
+			return this.signAccessToken(email._id, email)
+		} catch (error) {
+			throw new HttpException('Credential', HttpStatus.INTERNAL_SERVER_ERROR)
 		}
 	}
 }

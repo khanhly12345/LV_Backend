@@ -7,13 +7,16 @@ export class AuthController {
 
 	@Post('signup')
 	signUp(@Body() data: any) {
-		console.log(data)
 		return this.authService.signUp(data)
 	}
 
 	@Post('login')
 	logIn(@Body() data: any) {
-		console.log(data)
 		return this.authService.logIn(data)
+	}
+
+	@Post('refresh_token')
+	refreshToken(@Body() refresh_token: string) {
+		return this.authService.refreshToken(refresh_token)
 	}
 }

@@ -12,4 +12,7 @@ export class AuthService {
 	async logIn(data: any) {
 		return this.client.send('login', { data })
 	}
+	async refreshToken(data: any) {
+		return this.client.send('refresh_token', { data })
+	}
 }

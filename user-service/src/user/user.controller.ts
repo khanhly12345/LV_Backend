@@ -6,5 +6,8 @@ import { MessagePattern, Payload } from '@nestjs/microservices';
 export class UserController {
 	constructor(private userService: UserService){}
 
-
+	@MessagePattern('get_profile')
+	getUserProfile(@Body() data: any) {
+		return this.userService.getUserProfile(data);
+	}
 }
