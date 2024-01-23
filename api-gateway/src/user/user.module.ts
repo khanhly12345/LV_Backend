@@ -5,6 +5,7 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from 'src/Guard/jwt-guard.service';
+import { GoogleDriveService } from 'src/googledrive/googledrive.service';
 
 @Module({
 	imports: [
@@ -26,7 +27,7 @@ import { JwtStrategy } from 'src/Guard/jwt-guard.service';
 
 		})
 	],
-  providers: [UserService, JwtStrategy],
+  providers: [UserService, JwtStrategy, GoogleDriveService],
   controllers: [UserController]
 })
 export class UserModule {}

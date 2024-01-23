@@ -11,4 +11,8 @@ export class UserService {
 	async getUserProfile(data: string) {
 		return this.client.send('get_profile', { data })
 	}
+
+	addUser(data: any, id: string) {
+		return this.client.send('add_profile', { data, id })
+	}
 }

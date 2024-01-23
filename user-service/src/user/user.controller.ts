@@ -10,4 +10,9 @@ export class UserController {
 	getUserProfile(@Body() data: any) {
 		return this.userService.getUserProfile(data);
 	}
+
+	@MessagePattern('add_profile')
+	addUser(@Body() data: any) {
+		return this.userService.addUser(data)
+	}
 }

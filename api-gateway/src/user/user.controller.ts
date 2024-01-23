@@ -1,16 +1,19 @@
-import { Body, Controller, Get, Headers, Post, Req, Request, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Headers, Param, Post, Req, Request, UploadedFile, UploadedFiles, UseGuards, UseInterceptors } from '@nestjs/common';
 import { UserService } from './user.service';
 import { ConfigService } from '@nestjs/config';
 import { AuthGuard } from '@nestjs/passport';
 import { JwtGuard } from 'src/Guard';
 import { JwtService } from '@nestjs/jwt';
+import { FilesInterceptor } from '@nestjs/platform-express';
+import { GoogleDriveService } from 'src/googledrive/googledrive.service';
 
 @Controller('users')
 export class UserController {
 	constructor(
 		private userService: UserService,
 		private config: ConfigService,
-		private jwt: JwtService
+		private jwt: JwtService,
+		private readonly ggDriveService: GoogleDriveService,
 		){}
 
 	@Post('signup')
@@ -31,5 +34,12 @@ export class UserController {
 	getUserFile(@Req() req) {
 		console.log(req.user)
 		return this.userService.getUserProfile(req.user)
+	}
+
+	@Post('adduser/:id')
+	@UseInterceptors(FilesInterceptor('avatar'))
+	async addUser(@Body() data: any, @UploadedFiles() files: any, @Param('id') id: string) {
+		const fileId = await this.ggDriveService.uploadImage(files[0].buffer, files[0].originalname)
+		return this.userService.addUser({ ...data, urlId: fileId}, id)
 	}
 }
