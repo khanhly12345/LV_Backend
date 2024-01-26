@@ -15,4 +15,10 @@ export class OrderService {
 	async populateOrder() {
 		return this.orderService.find().populate('user').exec()
 	}
+
+	async createOrder(data: any) {
+		console.log(data)
+		const order = await this.orderService.create(data.payload)
+		return order;
+	}
 }
