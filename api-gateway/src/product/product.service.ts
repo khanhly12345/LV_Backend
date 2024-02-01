@@ -39,4 +39,13 @@ export class ProductService {
 	getCart(cart: any) {
 		return this.client.send('getCart', { cart })
 	}
+
+	// rate
+	createRate(data: any) {
+		return this.client.send('create_rate', { data })
+	}
+
+	getRate(data: any) {
+		return this.client.send('get_rate', { data })
+	}
 }

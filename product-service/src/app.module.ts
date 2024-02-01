@@ -5,6 +5,7 @@ import { ProductModule } from './product/product.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { GoogledriveModule } from './googledrive/googledrive.module';
+import { ReviewsModule } from './reviews/reviews.module';
 
 @Module({
   imports: [
@@ -16,7 +17,8 @@ import { GoogledriveModule } from './googledrive/googledrive.module';
     ),
 	ConfigModule.forRoot({isGlobal: true}),
     ProductModule,
-	GoogledriveModule
+	GoogledriveModule,
+	ReviewsModule
   ],
   controllers: [AppController],
   providers: [AppService],

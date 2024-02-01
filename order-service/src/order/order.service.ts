@@ -21,4 +21,35 @@ export class OrderService {
 		const order = await this.orderService.create(data.payload)
 		return order;
 	}
+
+	async getOrder() {
+		// const order = await this.orderService.find().populate('userId').populate({
+		// 	path: 'items.item',
+		// 	populate: {
+		// 		path: 'productId',
+		// 		model: 'Product'
+		// 	}
+		// })
+		const order = await this.orderService.find().populate('userId');
+		return order;
+	}
+
+	async deleteOrder(data: any) {
+		console.log(data)
+		const order = await this.orderService.deleteOne( { _id: data.id })
+		return order;
+	}
+
+	async getInvoice(data: any) {
+		console.log(data)
+		const invoice = await this.orderService.findOne({ _id: data.id }).populate('userId').populate({
+				path: 'items.item',
+				populate: {
+					path: 'productId',
+					model: 'Product'
+				}
+			})
+		console.log(invoice)
+		return invoice;
+	}
 }

@@ -12,4 +12,19 @@ export class OrderController {
   createOrder(@Body()data :any) {
 	return this.orderService.createOrder(data)
   }
+
+  @MessagePattern('get_order')
+  getOrder() {
+	return this.orderService.getOrder()
+  }
+
+  @MessagePattern('delete_order')
+  deleteOrder(@Body() id: string){
+	return this.orderService.deleteOrder(id)
+  }
+
+  @MessagePattern('get_invoice')
+  getInvoice(@Body() id: string) {
+	return this.orderService.getInvoice(id)
+  }
 }

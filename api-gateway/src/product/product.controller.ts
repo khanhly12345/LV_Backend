@@ -91,4 +91,17 @@ export class ProductController {
 	getCart(@Body() cart: any) {
 		return this.productService.getCart(cart)
 	}
+
+	//  rate
+	@Post('rate')
+	createRate(@Body() data: any) {
+		return this.productService.createRate(data)
+	}
+
+	@Post('getRate')
+	getRate(@Body() data: any) {
+		return this.productService.getRate(data)
+	}
 }
+
+

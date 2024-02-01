@@ -14,7 +14,7 @@ export class Item  {
   quantity: number;
 }
 
-@Schema()
+@Schema({ timestamps: true })
 export class Order {
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
   userId: User;

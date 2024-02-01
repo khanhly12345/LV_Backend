@@ -8,4 +8,16 @@ export class OrderService {
 	createOrder(payload: any) {
 		return this.client.send('create_order', { payload })
 	}
+
+	getOrder() {
+		return this.client.send('get_order', { })
+	}
+
+	deleteOrder(id: string) {
+		return this.client.send('delete_order', { id })
+	}
+
+	getInvoice(id: string) {
+		return this.client.send('get_invoice', { id })
+	}
 }
