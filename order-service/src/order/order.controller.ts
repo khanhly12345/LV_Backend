@@ -27,4 +27,9 @@ export class OrderController {
   getInvoice(@Body() id: string) {
 	return this.orderService.getInvoice(id)
   }
+
+  @MessagePattern('getInvoiceById')
+  getInvoiceById(@Body() id: string) {
+	return this.orderService.getInvoiceById(id)
+  }
 }

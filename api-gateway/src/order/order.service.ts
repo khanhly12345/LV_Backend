@@ -20,4 +20,9 @@ export class OrderService {
 	getInvoice(id: string) {
 		return this.client.send('get_invoice', { id })
 	}
+
+	getInvoiceById(id: string) {
+		console.log(id)
+		return this.client.send('getInvoiceById', { id })
+	}
 }

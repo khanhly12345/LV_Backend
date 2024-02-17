@@ -69,4 +69,10 @@ export class ProductService {
 		const cart = await this.productOptionService.find({ _id: { $in: payload.cart }}).populate('productId')
 		return cart;
 	}
+
+	// search
+	async search(payload: any) {
+		 const product = await this.productService.find({ productName: { $regex: new RegExp(payload.data.value, 'i')}})
+		 return product;
+	}
 }

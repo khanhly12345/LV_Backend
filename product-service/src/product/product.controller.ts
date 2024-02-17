@@ -48,4 +48,10 @@ export class ProductController {
 	getCart(@Payload() data: any) {
 		return this.productService.getCart(data)
 	}
+
+	// search
+	@MessagePattern('search_product')
+	search(@Payload() data: any) {
+		return this.productService.search(data)
+	}
 }

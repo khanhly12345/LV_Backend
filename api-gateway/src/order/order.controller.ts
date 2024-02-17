@@ -26,4 +26,9 @@ export class OrderController {
 		console.log(data)
 		return this.orderService.getInvoice(data.id)
 	}
+
+	@Post('getInvoiceById')
+	getInvoiceById(@Body() data: any) {
+		return this.orderService.getInvoiceById(data)
+	}
 }

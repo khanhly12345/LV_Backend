@@ -102,6 +102,11 @@ export class ProductController {
 	getRate(@Body() data: any) {
 		return this.productService.getRate(data)
 	}
+
+	@Post('search')
+	search(@Body() data: any) {
+		return this.productService.search(data)
+	}
 }
 
 

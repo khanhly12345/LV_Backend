@@ -48,4 +48,9 @@ export class ProductService {
 	getRate(data: any) {
 		return this.client.send('get_rate', { data })
 	}
+
+	// search
+	search(data: any) {
+		return this.client.send('search_product', { data })
+	}
 }

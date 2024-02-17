@@ -52,4 +52,15 @@ export class OrderService {
 		console.log(invoice)
 		return invoice;
 	}
+
+	async getInvoiceById(data: any) {
+		const invoice = await this.orderService.find({ userId: data.id.id}).populate({
+			path: 'items.item',
+			populate: {
+				path: 'productId',
+				model: 'Product'
+			}
+		})
+		return invoice;
+	}
 }
