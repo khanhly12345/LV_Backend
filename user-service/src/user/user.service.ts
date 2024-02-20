@@ -22,4 +22,9 @@ export class UserService {
 	const user: any = await this.userService.updateOne({ _id: payload.id} , payload.data)
 	return user;
   }
+
+  async getAllUser() {
+	const user = await this.userService.find({})
+	return user;
+  }
 }

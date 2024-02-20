@@ -42,4 +42,9 @@ export class UserController {
 		const fileId = await this.ggDriveService.uploadImage(files[0].buffer, files[0].originalname)
 		return this.userService.addUser({ ...data, urlId: fileId}, id)
 	}
+
+	@Get('getAllUser')
+	getAllUser() {
+		return this.userService.getAllUser()
+	}
 }

@@ -15,4 +15,8 @@ export class UserService {
 	addUser(data: any, id: string) {
 		return this.client.send('add_profile', { data, id })
 	}
+
+	getAllUser() {
+		return this.client.send('getAllUser', {})
+	}
 }

@@ -25,4 +25,12 @@ export class OrderService {
 		console.log(id)
 		return this.client.send('getInvoiceById', { id })
 	}
+
+	getChartUser() {
+		return this.client.send('getChartUser', {})
+	}
+
+	getChartOrder() {
+		return this.client.send('getChartOrder', {})
+	}
 }

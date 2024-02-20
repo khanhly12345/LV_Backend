@@ -15,4 +15,9 @@ export class UserController {
 	addUser(@Body() data: any) {
 		return this.userService.addUser(data)
 	}
+
+	@MessagePattern('getAllUser')
+	getAllUser() {
+		return this.userService.getAllUser()
+	}
 }

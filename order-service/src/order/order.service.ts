@@ -18,7 +18,9 @@ export class OrderService {
 
 	async createOrder(data: any) {
 		console.log(data)
-		const order = await this.orderService.create(data.payload)
+		const total: string = data.payload.total
+		const newTotal = parseInt(total)
+		const order = await this.orderService.create({...data.payload, newTotal})
 		return order;
 	}
 
@@ -62,5 +64,41 @@ export class OrderService {
 			}
 		})
 		return invoice;
+	}
+
+	async chartUser() {
+		const user = await this.orderService.aggregate([
+			{
+				$group: {
+					_id: '$userId',
+					totalOrders: { $sum: 1 }
+				}
+			},
+                {
+                    $sort: { totalUsers: -1 }
+                },
+                {
+                    $limit: 5
+                }
+		])
+		return user;
+	}
+
+	async chartTotalAmoutOfOrder() {
+		const user = await this.orderService.aggregate([
+			{
+				$group: {
+					_id: '$userId',
+					totalAmount: { $sum: '$total' }
+				}
+			},
+                {
+                    $sort: { totalUsers: -1 }
+                },
+                {
+                    $limit: 5
+                }
+		])
+		return user;
 	}
 }

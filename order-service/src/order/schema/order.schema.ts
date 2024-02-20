@@ -38,7 +38,7 @@ export class Order {
   status: string;
 
   @Prop()
-  total: string;
+  total: number;
 }
 
 export const OrderSchema = SchemaFactory.createForClass(Order);

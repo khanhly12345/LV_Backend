@@ -31,4 +31,14 @@ export class OrderController {
 	getInvoiceById(@Body() data: any) {
 		return this.orderService.getInvoiceById(data)
 	}
+
+	@Get('getChartUser')
+	getChartUser() {
+		return this.orderService.getChartUser()
+	}
+
+	@Get('getChartOrder')
+	getChartOrder() {
+		return this.orderService.getChartOrder()
+	}
 }
