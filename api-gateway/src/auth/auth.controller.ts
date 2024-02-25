@@ -19,4 +19,16 @@ export class AuthController {
 	refreshToken(@Body() refresh_token: string) {
 		return this.authService.refreshToken(refresh_token)
 	}
+
+	@Post('admin/login')
+	loginAdmin(@Body() data: any) {
+		console.log(data)
+		return this.authService.loginAdmin(data)
+	}
+
+	@Post('changePassword')
+	changePassword(@Body() data: any) {
+		console.log(data)
+		return this.authService.changePassword(data)
+	}
 }

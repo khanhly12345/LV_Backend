@@ -47,4 +47,14 @@ export class UserController {
 	getAllUser() {
 		return this.userService.getAllUser()
 	}
+
+	@Post('delete/:id')
+	deleteUser(@Param('id') id: string) {
+		return this.userService.deleteUser(id)
+	}
+
+	@Post('edit')
+	editUser(@Body() data: any) {
+		return this.userService.editUser(data)
+	}
 }

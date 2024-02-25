@@ -19,4 +19,12 @@ export class UserService {
 	getAllUser() {
 		return this.client.send('getAllUser', {})
 	}
+
+	deleteUser(id: any) {
+		return this.client.send('deleteUser', { id })
+	}
+
+	editUser(data: any) {
+		return this.client.send('editUser', { data })
+	}
 }

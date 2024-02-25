@@ -20,4 +20,14 @@ export class AuthController {
 	refresh_token(@Body() data: any) {
 		return this.authService.refreshToken(data)
 	}
+
+	@MessagePattern('loginAdmin')
+	loginAdmin(@Body() data: any) {
+		return this.authService.loginAdmin(data)
+	}
+
+	@MessagePattern('changePassword')
+	changePassword(@Body() data: any) {
+		return this.authService.changePassword(data)
+	}
 }

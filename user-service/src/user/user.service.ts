@@ -27,4 +27,16 @@ export class UserService {
 	const user = await this.userService.find({})
 	return user;
   }
+
+  async deleteUser(payload: any) {
+	console.log(payload)
+	const user = await this.userService.deleteOne({ _id: payload.id})
+	return user;
+  }
+
+  async editUser(payload) {
+	console.log(payload)
+	const user = await this.userService.updateMany({ ...payload.data })
+	return user;
+  }
 }

@@ -15,4 +15,12 @@ export class AuthService {
 	async refreshToken(data: any) {
 		return this.client.send('refresh_token', { data })
 	}
+
+	async loginAdmin(data) {
+		return this.client.send('loginAdmin', { data })
+	}
+
+	async changePassword(data) {
+		return this.client.send('changePassword', { data })
+	}
 }

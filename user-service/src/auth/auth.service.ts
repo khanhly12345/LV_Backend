@@ -107,4 +107,58 @@ export class AuthService {
 			throw new HttpException('Credential', HttpStatus.INTERNAL_SERVER_ERROR)
 		}
 	}
+
+	async loginAdmin(payload: any) {
+		console.log(payload.data.email)
+		const secret = this.config.get('JWT_SECRET')
+		try {
+			const email: any = await this.userService.findOne({ email: payload.data.email })
+
+			if(!email) {
+				return  new HttpException('Email Not Found!', HttpStatus.UNAUTHORIZED);
+			}
+
+			const comparePassword= await bcrypt.compare(payload.data.password, email.password);
+
+			if(!comparePassword) {
+				return new HttpException('Incorrect Password!', HttpStatus.UNAUTHORIZED)
+			}
+
+			if(email.role === 'user') {
+				return new HttpException('You are not Admin!', HttpStatus.UNAUTHORIZED)
+			}
+
+			console.log(email)
+
+			return await this.signToken(email._id, email)
+		} catch (error) {
+			throw new HttpException('Credential', HttpStatus.INTERNAL_SERVER_ERROR)
+		}
+	}
+
+	async changePassword(payload: any) {
+		console.log(payload)
+		try {
+			const email: any = await this.userService.findOne({ _id: payload.data.id })
+
+			if(!email) {
+				return  new HttpException('Email Not Found!', HttpStatus.UNAUTHORIZED);
+			}
+
+			const comparePassword= await bcrypt.compare(payload.data.password, email.password);
+
+			if(!comparePassword) {
+				return new HttpException('Incorrect Password!', HttpStatus.UNAUTHORIZED)
+			}
+
+			const saltRounds = 10;
+			const hashedPassword = await bcrypt.hash(payload.data.new_password, saltRounds);
+
+			const changePw = await this.userService.updateOne({_id: payload.data.id}, { password: hashedPassword })
+
+			return  new HttpException('Password was changed!', HttpStatus.OK)
+		} catch (error) {
+			throw new HttpException('Credential', HttpStatus.INTERNAL_SERVER_ERROR)
+		}
+	}
 }

@@ -20,4 +20,14 @@ export class UserController {
 	getAllUser() {
 		return this.userService.getAllUser()
 	}
+
+	@MessagePattern('deleteUser')
+	deleteUser(@Body() data: any) {
+		return this.userService.deleteUser(data)
+	}
+
+	@MessagePattern('editUser')
+	editUser(@Body() data: any) {
+		return this.userService.editUser(data)
+	}
 }
