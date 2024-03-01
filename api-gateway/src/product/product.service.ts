@@ -53,4 +53,12 @@ export class ProductService {
 	search(data: any) {
 		return this.client.send('search_product', { data })
 	}
+
+	myFavoriteItem(data) {
+		return this.client.send('myFavoriteItem',  { data })
+	}
+
+	getMyFavoriteItem(data) {
+		return this.client.send('getMyFavoriteItem', { data })
+	}
 }

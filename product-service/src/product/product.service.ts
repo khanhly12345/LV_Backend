@@ -1,8 +1,9 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { GoogleDriveService } from 'src/googledrive/googledrive.service';
+import { Favorites, FavoritesDocument } from 'src/schema/favorites';
 import { Product, ProductDocument } from 'src/schema/product.schema';
 import { ProductOption, ProductOptionDocument } from 'src/schema/productOption.schema';
 
@@ -11,6 +12,7 @@ export class ProductService {
 	constructor(
 		@InjectModel(Product.name) private productService: Model<ProductDocument>,
 		@InjectModel(ProductOption.name) private productOptionService: Model<ProductOptionDocument>,
+		@InjectModel(Favorites.name) private favoritesService: Model<FavoritesDocument>,
 		private readonly ggDriveService: GoogleDriveService,
 	){}
 
@@ -38,7 +40,7 @@ export class ProductService {
 		}
 	}
 
-	async deleteProduct(payload) {
+	async deleteProduct(payload: any) {
 		const product = await this.productService.findById(payload.id)
 
 		for(let i=0; i<product.image.length; i++) {
@@ -74,5 +76,37 @@ export class ProductService {
 	async search(payload: any) {
 		 const product = await this.productService.find({ productName: { $regex: new RegExp(payload.data.value, 'i')}})
 		 return product;
+	}
+
+	async myFavoriteItem(payload: any) {
+		console.log(payload)
+		try {
+			const favoriteItems = await this.favoritesService.find({ userId: payload.data.userId, productId: payload.data.productId })
+			if(favoriteItems.length === 0) {
+				await this.favoritesService.create(payload.data)
+			} else {
+				await this.favoritesService.updateOne({ favorite: payload.data.favorite})
+			}
+		} catch (error) {
+			throw new HttpException('Credential', HttpStatus.INTERNAL_SERVER_ERROR)
+		}
+	}
+
+	async getMyFavoriteItem(payload: any) {
+		try {
+			const favoriteItems = await this.favoritesService.findOne({ userId: payload.data.userId, productId: payload.data.productId })
+			console.log(favoriteItems)
+			if(favoriteItems) {
+				return {
+					favorite: favoriteItems.favorite
+				}
+			} else {
+				return {
+					favorite: false
+				}
+			}
+		} catch (error) {
+			throw new HttpException('Credential', HttpStatus.INTERNAL_SERVER_ERROR)
+		}
 	}
 }

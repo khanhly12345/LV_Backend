@@ -107,6 +107,16 @@ export class ProductController {
 	search(@Body() data: any) {
 		return this.productService.search(data)
 	}
+
+	@Post('myFavoriteItem')
+	myFavoriteItem(@Body() data: any) {
+		return this.productService.myFavoriteItem(data)
+	}
+
+	@Post('getMyFavoriteItem')
+	getMyFavoriteItem(@Body() data: any) {
+		return this.productService.getMyFavoriteItem(data)
+	}
 }
 
 

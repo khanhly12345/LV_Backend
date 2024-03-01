@@ -54,4 +54,15 @@ export class ProductController {
 	search(@Payload() data: any) {
 		return this.productService.search(data)
 	}
+
+	// my favorite item
+	@MessagePattern('myFavoriteItem')
+	myFavoriteItem(@Payload() data: any) {
+		return this.productService.myFavoriteItem(data)
+	}
+
+	@MessagePattern('getMyFavoriteItem')
+	getMyFavoriteItem(@Payload() data: any) {
+		return this.productService.getMyFavoriteItem(data)
+	}
 }
